@@ -33,6 +33,9 @@ public class UserController {
   @RequestMapping("/all/{type}")
   public List<User> getAllUser(@PathVariable("type") Integer type) {
     log.info("getAllUser...");
+    List<User> allUser = userService.getAllUser(type);
+    User user = allUser.get(0);
+    System.out.println(user);
     return userService.getAllUser(type);
   }
 }

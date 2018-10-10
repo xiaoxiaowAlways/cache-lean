@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,14 +27,11 @@ public class UserService {
     return new User(userId, "xiaoxiaow" + userId);
   }
 
-  @Cacheable(cacheNames = "allUser", cacheManager = "userCacheManager")
+  @Cacheable(cacheNames = "allUser", cacheManager = "userListCacheManager")
   public List<User> getAllUser(Integer type) {
     log.info("getAllUser 被调用。。。。");
     User user1 = new User(1, "xiaoxiaow1");
     User user2 = new User(2, "xiaoxiaow2");
-    return new ArrayList<User>() {{
-      add(user1);
-      add(user2);
-    }};
+    return Arrays.asList(user1, user2);
   }
 }
