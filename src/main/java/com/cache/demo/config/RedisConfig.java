@@ -2,6 +2,9 @@ package com.cache.demo.config;
 
 import com.cache.demo.model.User;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -40,7 +43,11 @@ public class RedisConfig {
   public RedisTemplate<Object, List<User>> userListRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
     RedisTemplate<Object, List<User>> template = new RedisTemplate<>();
     template.setConnectionFactory(redisConnectionFactory);
-    template.setDefaultSerializer(new Jackson2JsonRedisSerializer<>(List.class));
+    Jackson2JsonRedisSerializer<List> serializer = new Jackson2JsonRedisSerializer<>(List.class);
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+    serializer.setObjectMapper(objectMapper);
+    template.setDefaultSerializer(serializer);
     return template;
   }
 
