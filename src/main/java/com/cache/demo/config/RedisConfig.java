@@ -40,10 +40,10 @@ public class RedisConfig {
   }
 
   @Bean
-  public RedisTemplate<Object, List<User>> userListRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
-    RedisTemplate<Object, List<User>> template = new RedisTemplate<>();
+  public RedisTemplate<Object, Object> userListRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+    RedisTemplate<Object, Object> template = new RedisTemplate<>();
     template.setConnectionFactory(redisConnectionFactory);
-    Jackson2JsonRedisSerializer<List> serializer = new Jackson2JsonRedisSerializer<>(List.class);
+    Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
     serializer.setObjectMapper(objectMapper);
@@ -52,7 +52,7 @@ public class RedisConfig {
   }
 
   @Bean
-  public RedisCacheManager userListCacheManager(RedisTemplate<Object, List<User>> userListRedisTemplate) {
+  public RedisCacheManager userListCacheManager(RedisTemplate<Object, Object> userListRedisTemplate) {
     RedisCacheManager cacheManager = new RedisCacheManager(userListRedisTemplate);
     cacheManager.setUsePrefix(true);
     return cacheManager;
