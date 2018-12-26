@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  * @Date: 2018/10/10 10:16
  * @Description:
  */
-@RestController
+//@RestController
 @AllArgsConstructor
 @Slf4j
 @RequestMapping("user")
